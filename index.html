@@ -100,7 +100,7 @@
 
   .list { padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 10px; }
 
-  .card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; position: relative; cursor: pointer; }
+  .card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; position: relative; cursor: pointer; width: 100%; text-align: left; color: inherit; font: inherit; }
   .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 3px; }
   .card-ref { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
   .card-fam { flex-shrink: 0; font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; background: var(--bg-panel-2); color: var(--amber); padding: 3px 8px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--line-strong); }
@@ -121,6 +121,9 @@
   .guide-title { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--amber); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
   .guide-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.55; }
 
+  .guide-title-card { display: block; width: 100%; text-align: left; background: var(--amber-bg); border: none; border-left: 2px solid var(--amber); border-radius: 0 8px 8px 0; padding: 12px 13px; margin-bottom: 8px; color: inherit; font: inherit; cursor: pointer; }
+  .guide-open-hint { font-family: var(--font-mono); font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 5px; }
+
   footer { padding: 18px 16px; text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; border-top: 1px solid var(--line); margin-top: 8px; }
 
   /* --- Dashboard --- */
@@ -129,19 +132,22 @@
   .dash-section { padding: 14px 16px 4px; }
   .dash-section-title { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
 
-  .fam-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .fam-tile { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: left; color: inherit; font: inherit; cursor: pointer; }
-  .fam-tile:active { border-color: var(--amber-dim); background: var(--amber-bg); }
-  .fam-tile-name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.3px; }
-  .fam-tile-count { display: flex; align-items: baseline; gap: 5px; margin-top: 8px; }
-  .fam-tile-num { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--amber); }
-  .fam-tile-unit { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+  .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cat-tile { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: left; color: inherit; font: inherit; cursor: pointer; }
+  .cat-tile:active { border-color: var(--amber-dim); background: var(--amber-bg); }
+  .cat-tile-name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.3px; }
+  .cat-tile-count { display: flex; align-items: baseline; gap: 5px; margin-top: 8px; }
+  .cat-tile-num { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--amber); }
+  .cat-tile-unit { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
 
   .mini-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
   .mini-card { flex-shrink: 0; width: 152px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; text-align: left; color: inherit; font: inherit; cursor: pointer; }
   .mini-card:active { border-color: var(--amber-dim); }
-  .mini-card-fam { font-family: var(--font-mono); font-size: 9px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
   .mini-card-ref { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mini-card-count { font-family: var(--font-mono); font-size: 9.5px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+
+  .section-link { display: inline-flex; align-items: center; gap: 4px; background: none; border: none; color: var(--amber); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 0 2px; cursor: pointer; }
+  .section-link:active { color: var(--amber-dim); }
 
   /* --- Back link / detail --- */
   .back-link { display: inline-flex; align-items: center; gap: 4px; background: none; border: none; color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 16px 16px 2px; }
@@ -150,12 +156,8 @@
 
   .detail-wrap { padding: 6px 16px 24px; }
   .detail-card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
-  .detail-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .detail-head { margin-bottom: 14px; }
   .detail-ref { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 8px; line-height: 1.3; }
-  .fav-btn { width: 38px; height: 38px; flex-shrink: 0; border-radius: 9px; background: var(--bg-panel-2); border: 1px solid var(--line-strong); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; padding: 0; }
-  .fav-btn svg { width: 18px; height: 18px; }
-  .fav-btn.active { background: var(--amber-bg); border-color: var(--amber-dim); color: var(--amber); }
-  .fav-btn.active svg { fill: var(--amber); }
 </style>
 </head>
 <body>
@@ -198,8 +200,8 @@
     <div class="dash-stats" id="dash-stats"></div>
 
     <div class="dash-section">
-      <div class="dash-section-title">Familles</div>
-      <div class="fam-grid" id="fam-grid"></div>
+      <div class="dash-section-title">Catégories</div>
+      <div class="cat-grid" id="cat-grid"></div>
     </div>
 
     <div class="dash-section" id="recents-section" style="display:none">
@@ -210,10 +212,11 @@
     <div class="dash-section" id="favorites-section" style="display:none">
       <div class="dash-section-title">Favoris</div>
       <div class="mini-row" id="favorites-row"></div>
+      <button class="section-link" id="all-favorites-btn">Tous mes favoris →</button>
     </div>
 
     <div class="dash-section">
-      <div class="dash-section-title">Guides de lecture</div>
+      <div class="dash-section-title">Guides du Câbleur</div>
       <div class="guides" id="dash-guides"></div>
     </div>
   </div>
@@ -228,6 +231,18 @@
     <div class="guides" id="guides"></div>
     <div class="list" id="list"></div>
     <div class="empty" id="empty">— AUCUN RÉSULTAT —<br>Vérifie l'orthographe ou change de filtre</div>
+  </div>
+
+  <div id="view-all-searches" style="display:none">
+    <button class="back-link" id="all-searches-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Dashboard
+    </button>
+    <div class="dash-section" style="padding-top:4px;">
+      <div class="dash-section-title">Tous mes favoris</div>
+    </div>
+    <div class="list" id="all-searches-list"></div>
+    <div class="empty" id="all-searches-empty">— AUCUNE RECHERCHE ENREGISTRÉE —<br>Utilise la recherche pour commencer</div>
   </div>
 
   <div id="view-detail" style="display:none">
@@ -262,6 +277,7 @@ const logoutBtn = document.getElementById('logout-btn');
 
 const viewDashboardEl = document.getElementById('view-dashboard');
 const viewResultsEl = document.getElementById('view-results');
+const viewAllSearchesEl = document.getElementById('view-all-searches');
 const viewDetailEl = document.getElementById('view-detail');
 
 const dashSearchSlot = document.getElementById('dash-search-slot');
@@ -271,11 +287,12 @@ const searchFrame = document.getElementById('search-frame');
 const searchEl = document.getElementById('search');
 
 const dashStatsEl = document.getElementById('dash-stats');
-const famGridEl = document.getElementById('fam-grid');
+const catGridEl = document.getElementById('cat-grid');
 const recentsSectionEl = document.getElementById('recents-section');
 const recentsRowEl = document.getElementById('recents-row');
 const favoritesSectionEl = document.getElementById('favorites-section');
 const favoritesRowEl = document.getElementById('favorites-row');
+const allFavoritesBtn = document.getElementById('all-favorites-btn');
 const dashGuidesEl = document.getElementById('dash-guides');
 
 const resultsBackBtn = document.getElementById('results-back');
@@ -284,42 +301,79 @@ const listEl = document.getElementById('list');
 const emptyEl = document.getElementById('empty');
 const guidesEl = document.getElementById('guides');
 
+const allSearchesBackBtn = document.getElementById('all-searches-back');
+const allSearchesListEl = document.getElementById('all-searches-list');
+const allSearchesEmptyEl = document.getElementById('all-searches-empty');
+
 const detailBackBtn = document.getElementById('detail-back');
 const detailWrapEl = document.getElementById('detail-wrap');
 
 /* ---------- State ---------- */
-let activeFam = "Tout";
+let activeCategory = "tout"; // 'tout' | id d'une CATEGORIES
+let activeGroup = "Tout";
 let currentView = "dashboard";
 let detailReturnView = "dashboard";
+let searchDebounceTimer = null;
+let lastCommittedQuery = "";
 
-/* ---------- Favoris / récents (localStorage) ---------- */
+function currentCategoryObj() {
+  return activeCategory === "tout"
+    ? { id: "tout", label: "Tout", pool: ALL_DATA, groupField: null }
+    : CATEGORIES.find(c => c.id === activeCategory);
+}
+
+/* ---------- Identité des références ---------- */
 function itemId(d) { return d.fam + '::' + d.ref; }
 function findById(id) { return ALL_DATA.find(d => itemId(d) === id); }
 
-function getRecents() {
-  try { return JSON.parse(localStorage.getItem('kgu_recent') || '[]'); } catch { return []; }
+/* ---------- Historique de recherche (localStorage) ---------- */
+function getSearchHistory() {
+  try { return JSON.parse(localStorage.getItem('kgu_search_history') || '[]'); } catch { return []; }
 }
-function addRecent(id) {
-  let arr = getRecents().filter(x => x !== id);
-  arr.unshift(id);
-  localStorage.setItem('kgu_recent', JSON.stringify(arr.slice(0, 5)));
+function saveSearchHistory(hist) { localStorage.setItem('kgu_search_history', JSON.stringify(hist)); }
+
+function recordSearch(query) {
+  query = query.trim();
+  if (!query) return;
+  const hist = getSearchHistory();
+  const key = query.toLowerCase();
+  let entry = hist.find(h => h.query.toLowerCase() === key);
+  if (entry) { entry.count++; entry.last = Date.now(); entry.query = query; }
+  else { hist.push({ query, count: 1, last: Date.now() }); }
+  if (hist.length > 100) { hist.sort((a, b) => b.last - a.last); hist.length = 100; }
+  saveSearchHistory(hist);
 }
 
-function getFavorites() {
-  try { return JSON.parse(localStorage.getItem('kgu_favorites') || '[]'); } catch { return []; }
+function commitSearch() {
+  const q = searchEl.value.trim();
+  if (q && q.toLowerCase() !== lastCommittedQuery.toLowerCase()) {
+    recordSearch(q);
+    lastCommittedQuery = q;
+  }
 }
-function toggleFavorite(id) {
-  let arr = getFavorites();
-  if (arr.includes(id)) arr = arr.filter(x => x !== id);
-  else arr.unshift(id);
-  localStorage.setItem('kgu_favorites', JSON.stringify(arr));
-  return arr.includes(id);
-}
-function isFavorite(id) { return getFavorites().includes(id); }
 
 /* ---------- Rendering: résultats (recherche/filtre) ---------- */
 function updateChipsActive() {
-  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.fam === activeFam));
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.group === activeGroup));
+}
+
+function renderChipsForCategory(cat) {
+  chipsEl.innerHTML = '';
+  if (!cat.groupField) { chipsEl.style.display = 'none'; return; }
+  chipsEl.style.display = 'flex';
+  const values = [...new Set(cat.pool.map(d => d[cat.groupField]))];
+  ['Tout', ...values].forEach(v => {
+    const chip = document.createElement('button');
+    chip.className = 'chip' + (v === activeGroup ? ' active' : '');
+    chip.textContent = v;
+    chip.dataset.group = v;
+    chip.addEventListener('click', () => {
+      activeGroup = v;
+      updateChipsActive();
+      render();
+    });
+    chipsEl.appendChild(chip);
+  });
 }
 
 function renderGuides() {
@@ -345,20 +399,25 @@ function toolHint(d) {
 
 function render() {
   renderGuides();
+  const cat = currentCategoryObj();
   const q = searchEl.value.trim().toLowerCase();
   listEl.innerHTML = '';
 
-  const results = ALL_DATA.filter(d => {
-    const famOk = activeFam === "Tout" || d.fam === activeFam;
+  const results = cat.pool.filter(d => {
+    const groupOk = !cat.groupField || activeGroup === "Tout" || d[cat.groupField] === activeGroup;
     const text = Object.values(d).join(" ").toLowerCase();
-    return famOk && text.includes(q);
+    return groupOk && text.includes(q);
   });
 
+  const isEmptyCategory = cat.id === 'connecteurs' && cat.pool.length === 0;
+  emptyEl.innerHTML = isEmptyCategory
+    ? "— CATÉGORIE À VENIR —<br>Ajoute tes premières références de corps de connecteur"
+    : "— AUCUN RÉSULTAT —<br>Vérifie l'orthographe ou change de filtre";
   emptyEl.style.display = results.length ? 'none' : 'block';
   listEl.style.display = results.length ? 'flex' : 'none';
 
   results.forEach(d => {
-    const card = document.createElement('div');
+    const card = document.createElement('button');
     card.className = 'card';
     card.dataset.id = itemId(d);
     card.innerHTML = `
@@ -378,69 +437,109 @@ listEl.addEventListener('click', e => {
   const card = e.target.closest('.card');
   if (!card) return;
   const d = findById(card.dataset.id);
-  if (d) showDetail(d, 'results');
+  if (!d) return;
+  commitSearch();
+  openDetail(() => renderConnectorDetail(d), 'results');
 });
 
 /* ---------- Rendering: dashboard ---------- */
-function renderFamGrid() {
-  famGridEl.innerHTML = '';
-  FAMILIES.filter(f => f !== 'Tout').forEach(f => {
-    const count = ALL_DATA.filter(d => d.fam === f).length;
+function renderCategoryGrid() {
+  catGridEl.innerHTML = '';
+  CATEGORIES.forEach(cat => {
     const btn = document.createElement('button');
-    btn.className = 'fam-tile';
-    btn.dataset.fam = f;
-    btn.innerHTML = `<div class="fam-tile-name">${f}</div><div class="fam-tile-count"><span class="fam-tile-num">${count}</span><span class="fam-tile-unit">réf.</span></div>`;
-    famGridEl.appendChild(btn);
+    btn.className = 'cat-tile';
+    btn.dataset.cat = cat.id;
+    let numHtml;
+    if (cat.id === 'fabricants') {
+      const n = new Set(cat.pool.map(d => d.fabricant)).size;
+      numHtml = `<span class="cat-tile-num">${n}</span><span class="cat-tile-unit">marques</span>`;
+    } else {
+      numHtml = `<span class="cat-tile-num">${cat.pool.length}</span><span class="cat-tile-unit">réf.</span>`;
+    }
+    btn.innerHTML = `<div class="cat-tile-name">${cat.label}</div><div class="cat-tile-count">${numHtml}</div>`;
+    catGridEl.appendChild(btn);
   });
 }
 
 function renderDashGuides() {
   dashGuidesEl.innerHTML = '';
   GUIDES.forEach(g => {
-    const div = document.createElement('div');
-    div.className = 'guide-card';
-    div.innerHTML = `<div class="guide-title">${g.titre}</div><div class="guide-text">${g.texte}</div>`;
-    dashGuidesEl.appendChild(div);
+    const btn = document.createElement('button');
+    btn.className = 'guide-title-card';
+    btn.dataset.titre = g.titre;
+    btn.innerHTML = `<div class="guide-title">${g.titre}</div><div class="guide-open-hint">Lire l'article →</div>`;
+    dashGuidesEl.appendChild(btn);
   });
 }
 
-function renderMiniRow(containerEl, sectionEl, ids) {
+function renderMiniSearchRow(containerEl, sectionEl, entries) {
   containerEl.innerHTML = '';
-  const items = ids.map(findById).filter(Boolean);
-  sectionEl.style.display = items.length ? 'block' : 'none';
-  items.forEach(d => {
+  sectionEl.style.display = entries.length ? 'block' : 'none';
+  entries.forEach(h => {
     const btn = document.createElement('button');
     btn.className = 'mini-card';
-    btn.dataset.id = itemId(d);
-    btn.innerHTML = `<div class="mini-card-fam">${d.fam}</div><div class="mini-card-ref">${d.ref}</div>`;
+    btn.dataset.query = h.query;
+    btn.innerHTML = `<div class="mini-card-ref">${h.query}</div>${h.count > 1 ? `<div class="mini-card-count">×${h.count}</div>` : ''}`;
     containerEl.appendChild(btn);
   });
 }
-function renderDashRecents() { renderMiniRow(recentsRowEl, recentsSectionEl, getRecents()); }
-function renderDashFavorites() { renderMiniRow(favoritesRowEl, favoritesSectionEl, getFavorites()); }
+
+function renderDashRecents() {
+  const hist = getSearchHistory().slice().sort((a, b) => b.last - a.last).slice(0, 5);
+  renderMiniSearchRow(recentsRowEl, recentsSectionEl, hist);
+}
+
+function renderDashFavorites() {
+  const hist = getSearchHistory();
+  const top = hist.slice().sort((a, b) => b.count - a.count || b.last - a.last).slice(0, 5);
+  renderMiniSearchRow(favoritesRowEl, favoritesSectionEl, top);
+  allFavoritesBtn.style.display = hist.length ? 'inline-flex' : 'none';
+}
+
+function renderAllSearches() {
+  const hist = getSearchHistory().slice().sort((a, b) => b.count - a.count || b.last - a.last);
+  allSearchesListEl.innerHTML = '';
+  allSearchesEmptyEl.style.display = hist.length ? 'none' : 'block';
+  allSearchesListEl.style.display = hist.length ? 'flex' : 'none';
+  hist.forEach(h => {
+    const row = document.createElement('button');
+    row.className = 'card';
+    row.dataset.query = h.query;
+    row.innerHTML = `
+      <div class="card-head">
+        <span class="card-ref">${h.query}</span>
+        <span class="card-fam">×${h.count}</span>
+      </div>
+      <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    `;
+    allSearchesListEl.appendChild(row);
+  });
+}
+
+allSearchesListEl.addEventListener('click', e => {
+  const row = e.target.closest('.card');
+  if (row) goToSearch(row.dataset.query);
+});
 
 viewDashboardEl.addEventListener('click', e => {
-  const famTile = e.target.closest('.fam-tile');
-  if (famTile) {
-    resultsSearchSlot.appendChild(searchWrapEl);
-    activeFam = famTile.dataset.fam;
-    updateChipsActive();
-    searchEl.value = '';
-    setView('results');
-    render();
-    return;
-  }
+  const tile = e.target.closest('.cat-tile');
+  if (tile) { enterCategory(tile.dataset.cat); return; }
   const miniCard = e.target.closest('.mini-card');
-  if (miniCard) {
-    const d = findById(miniCard.dataset.id);
-    if (d) showDetail(d, 'dashboard');
+  if (miniCard) { goToSearch(miniCard.dataset.query); return; }
+  const guideCard = e.target.closest('.guide-title-card');
+  if (guideCard) {
+    const g = GUIDES.find(x => x.titre === guideCard.dataset.titre);
+    if (g) openDetail(() => renderGuideDetail(g), 'dashboard');
   }
 });
 
+allFavoritesBtn.addEventListener('click', () => {
+  renderAllSearches();
+  setView('all-searches');
+});
+
 /* ---------- Rendering: détail ---------- */
-function renderDetailCard(d) {
-  const id = itemId(d);
-  const fav = isFavorite(id);
+function renderConnectorDetail(d) {
   let rows = '';
   if (d.pince && d.pince !== '—') rows += `<tr><td>Pince</td><td>${d.pince}</td></tr>`;
   if (d.tourelle && d.tourelle !== '—') rows += `<tr><td>Tourelle</td><td>${d.tourelle}</td></tr>`;
@@ -451,25 +550,25 @@ function renderDetailCard(d) {
   detailWrapEl.innerHTML = `
     <div class="detail-card">
       <div class="detail-head">
-        <div>
-          <span class="card-fam">${d.fam}</span>
-          <div class="detail-ref">${d.ref}</div>
-          <div class="card-sub">${d.type}${d.taille && d.taille !== '—' ? ' · ' + d.taille : ''}</div>
-        </div>
-        <button class="fav-btn${fav ? ' active' : ''}" id="detail-fav-btn" aria-label="Favori">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </button>
+        <span class="card-fam">${d.fam}</span>
+        <div class="detail-ref">${d.ref}</div>
+        <div class="card-sub">${d.type}${d.taille && d.taille !== '—' ? ' · ' + d.taille : ''}</div>
       </div>
       <table class="card-table">${rows}</table>
       ${d.notes && d.notes !== '—' ? `<div class="card-notes">${d.notes}</div>` : ''}
     </div>
   `;
+}
 
-  document.getElementById('detail-fav-btn').addEventListener('click', () => {
-    const nowFav = toggleFavorite(id);
-    document.getElementById('detail-fav-btn').classList.toggle('active', nowFav);
-    renderDashFavorites();
-  });
+function renderGuideDetail(g) {
+  detailWrapEl.innerHTML = `
+    <div class="detail-card">
+      <div class="detail-head">
+        <div class="detail-ref">${g.titre}</div>
+      </div>
+      <div class="card-notes" style="margin-top:0;padding-top:0;border-top:none;font-size:12.5px;line-height:1.65;">${g.texte}</div>
+    </div>
+  `;
 }
 
 /* ---------- Navigation entre vues ---------- */
@@ -477,29 +576,54 @@ function setView(view) {
   currentView = view;
   viewDashboardEl.style.display = view === 'dashboard' ? 'block' : 'none';
   viewResultsEl.style.display = view === 'results' ? 'block' : 'none';
+  viewAllSearchesEl.style.display = view === 'all-searches' ? 'block' : 'none';
   viewDetailEl.style.display = view === 'detail' ? 'block' : 'none';
   window.scrollTo(0, 0);
 }
 
 function showDashboardView() {
+  clearTimeout(searchDebounceTimer);
+  commitSearch();
   dashSearchSlot.appendChild(searchWrapEl);
   searchEl.value = '';
-  activeFam = 'Tout';
-  updateChipsActive();
+  activeCategory = 'tout';
+  activeGroup = 'Tout';
   renderDashRecents();
   renderDashFavorites();
   setView('dashboard');
 }
 
-function showDetail(d, returnView) {
+function enterCategory(catId) {
+  resultsSearchSlot.appendChild(searchWrapEl);
+  activeCategory = catId;
+  activeGroup = 'Tout';
+  searchEl.value = '';
+  lastCommittedQuery = '';
+  renderChipsForCategory(currentCategoryObj());
+  setView('results');
+  render();
+}
+
+function goToSearch(query) {
+  resultsSearchSlot.appendChild(searchWrapEl);
+  activeCategory = 'tout';
+  activeGroup = 'Tout';
+  renderChipsForCategory(currentCategoryObj());
+  searchEl.value = query;
+  lastCommittedQuery = '';
+  setView('results');
+  render();
+}
+
+function openDetail(renderFn, returnView) {
   detailReturnView = returnView;
-  addRecent(itemId(d));
-  renderDetailCard(d);
+  renderFn();
   setView('detail');
 }
 
 brandHomeBtn.addEventListener('click', showDashboardView);
 resultsBackBtn.addEventListener('click', showDashboardView);
+allSearchesBackBtn.addEventListener('click', showDashboardView);
 detailBackBtn.addEventListener('click', () => {
   if (detailReturnView === 'results') { setView('results'); }
   else { showDashboardView(); }
@@ -512,32 +636,23 @@ searchFrame.addEventListener('focusout', () => searchFrame.classList.remove('foc
 searchEl.addEventListener('input', () => {
   if (currentView === 'dashboard') {
     resultsSearchSlot.appendChild(searchWrapEl);
-    activeFam = 'Tout';
-    updateChipsActive();
+    activeCategory = 'tout';
+    activeGroup = 'Tout';
+    lastCommittedQuery = '';
+    renderChipsForCategory(currentCategoryObj());
     setView('results');
     searchEl.focus();
   }
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(commitSearch, 900);
   render();
 });
 
-/* ---------- Chips (familles, vue résultats) ---------- */
-FAMILIES.forEach(f => {
-  const chip = document.createElement('button');
-  chip.className = 'chip' + (f === activeFam ? ' active' : '');
-  chip.textContent = f;
-  chip.dataset.fam = f;
-  chip.addEventListener('click', () => {
-    activeFam = f;
-    updateChipsActive();
-    render();
-  });
-  chipsEl.appendChild(chip);
-});
-
 /* ---------- Init contenu statique dashboard ---------- */
-renderFamGrid();
+renderCategoryGrid();
+renderChipsForCategory(currentCategoryObj());
 renderDashGuides();
-dashStatsEl.textContent = `${FAMILIES.length - 1} FAMILLES · ${ALL_DATA.length} RÉFÉRENCES`;
+dashStatsEl.textContent = `${CATEGORIES.length} CATÉGORIES · ${ALL_DATA.length} RÉFÉRENCES`;
 render();
 
 /* ---------- PIN gate ---------- */
