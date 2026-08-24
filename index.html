@@ -68,7 +68,7 @@
     background: var(--bg-panel); border-bottom: 1px solid var(--line); padding: 14px 16px;
     display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10;
   }
-  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand { display: flex; align-items: center; gap: 10px; background: none; border: none; padding: 0; color: inherit; font: inherit; text-align: left; }
   .brand-mark { width: 28px; height: 28px; border-radius: 7px; background: var(--bg-panel-2); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; }
   .brand-mark svg { width: 16px; height: 16px; }
   .brand-name { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
@@ -100,11 +100,13 @@
 
   .list { padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 10px; }
 
-  .card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; position: relative; }
+  .card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; position: relative; cursor: pointer; }
   .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 3px; }
   .card-ref { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
   .card-fam { flex-shrink: 0; font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; background: var(--bg-panel-2); color: var(--amber); padding: 3px 8px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--line-strong); }
   .card-sub { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 10px; }
+  .card-hint { font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary); padding-right: 22px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card-chevron { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--text-muted); }
   .card-table { width: 100%; font-size: 12px; border-collapse: collapse; }
   .card-table td { padding: 4px 0; border-top: 1px solid var(--line); }
   .card-table tr:first-child td { border-top: none; }
@@ -120,6 +122,40 @@
   .guide-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.55; }
 
   footer { padding: 18px 16px; text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; border-top: 1px solid var(--line); margin-top: 8px; }
+
+  /* --- Dashboard --- */
+  .dash-stats { text-align: center; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; padding: 0 16px 6px; }
+
+  .dash-section { padding: 14px 16px 4px; }
+  .dash-section-title { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+
+  .fam-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .fam-tile { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: left; color: inherit; font: inherit; cursor: pointer; }
+  .fam-tile:active { border-color: var(--amber-dim); background: var(--amber-bg); }
+  .fam-tile-name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.3px; }
+  .fam-tile-count { display: flex; align-items: baseline; gap: 5px; margin-top: 8px; }
+  .fam-tile-num { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--amber); }
+  .fam-tile-unit { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+  .mini-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+  .mini-card { flex-shrink: 0; width: 152px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; text-align: left; color: inherit; font: inherit; cursor: pointer; }
+  .mini-card:active { border-color: var(--amber-dim); }
+  .mini-card-fam { font-family: var(--font-mono); font-size: 9px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .mini-card-ref { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* --- Back link / detail --- */
+  .back-link { display: inline-flex; align-items: center; gap: 4px; background: none; border: none; color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 16px 16px 2px; }
+  .back-link svg { width: 14px; height: 14px; }
+  .back-link:active { color: var(--amber); }
+
+  .detail-wrap { padding: 6px 16px 24px; }
+  .detail-card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .detail-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .detail-ref { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 8px; line-height: 1.3; }
+  .fav-btn { width: 38px; height: 38px; flex-shrink: 0; border-radius: 9px; background: var(--bg-panel-2); border: 1px solid var(--line-strong); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; padding: 0; }
+  .fav-btn svg { width: 18px; height: 18px; }
+  .fav-btn.active { background: var(--amber-bg); border-color: var(--amber-dim); color: var(--amber); }
+  .fav-btn.active svg { fill: var(--amber); }
 </style>
 </head>
 <body>
@@ -136,12 +172,12 @@
 
 <div id="app">
   <header>
-    <div class="brand">
+    <button class="brand" id="brand-home" aria-label="Accueil">
       <div class="brand-mark">
         <svg viewBox="0 0 24 24" fill="none" stroke="#E8A33D" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="#E8A33D"/><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/></svg>
       </div>
       <span class="brand-name">PinPoint</span>
-    </div>
+    </button>
     <div class="header-right">
       <div class="status-led" id="net-badge"><span class="led-dot"></span>Hors ligne</div>
       <button class="logout-btn" id="logout-btn" title="Déconnexion" aria-label="Déconnexion">
@@ -150,19 +186,57 @@
     </div>
   </header>
 
-  <div class="search-wrap">
-    <div class="search-frame" id="search-frame">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="search" type="text" placeholder="Réf, taille, marque, section...">
+  <div id="view-dashboard">
+    <div class="search-slot" id="dash-search-slot">
+      <div class="search-wrap" id="search-wrap">
+        <div class="search-frame" id="search-frame">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="search" type="text" placeholder="Réf, taille, marque, section...">
+        </div>
+      </div>
+    </div>
+    <div class="dash-stats" id="dash-stats"></div>
+
+    <div class="dash-section">
+      <div class="dash-section-title">Familles</div>
+      <div class="fam-grid" id="fam-grid"></div>
+    </div>
+
+    <div class="dash-section" id="recents-section" style="display:none">
+      <div class="dash-section-title">Récemment consultés</div>
+      <div class="mini-row" id="recents-row"></div>
+    </div>
+
+    <div class="dash-section" id="favorites-section" style="display:none">
+      <div class="dash-section-title">Favoris</div>
+      <div class="mini-row" id="favorites-row"></div>
+    </div>
+
+    <div class="dash-section">
+      <div class="dash-section-title">Guides de lecture</div>
+      <div class="guides" id="dash-guides"></div>
     </div>
   </div>
 
-  <div class="chips" id="chips"></div>
+  <div id="view-results" style="display:none">
+    <button class="back-link" id="results-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Dashboard
+    </button>
+    <div class="search-slot" id="results-search-slot"></div>
+    <div class="chips" id="chips"></div>
+    <div class="guides" id="guides"></div>
+    <div class="list" id="list"></div>
+    <div class="empty" id="empty">— AUCUN RÉSULTAT —<br>Vérifie l'orthographe ou change de filtre</div>
+  </div>
 
-  <div class="guides" id="guides"></div>
-
-  <div class="list" id="list"></div>
-  <div class="empty" id="empty">— AUCUN RÉSULTAT —<br>Vérifie l'orthographe ou change de filtre</div>
+  <div id="view-detail" style="display:none">
+    <button class="back-link" id="detail-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour
+    </button>
+    <div class="detail-wrap" id="detail-wrap"></div>
+  </div>
 
   <footer>PinPoint · KGU Studio · Usage interne · v1.0</footer>
 </div>
@@ -176,19 +250,301 @@ async function sha256(text) {
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+/* ---------- Element refs ---------- */
 const gate = document.getElementById('gate');
 const appEl = document.getElementById('app');
 const pinInput = document.getElementById('pin-input');
 const pinError = document.getElementById('pin-error');
 const pinSubmit = document.getElementById('pin-submit');
 
+const brandHomeBtn = document.getElementById('brand-home');
+const logoutBtn = document.getElementById('logout-btn');
+
+const viewDashboardEl = document.getElementById('view-dashboard');
+const viewResultsEl = document.getElementById('view-results');
+const viewDetailEl = document.getElementById('view-detail');
+
+const dashSearchSlot = document.getElementById('dash-search-slot');
+const resultsSearchSlot = document.getElementById('results-search-slot');
+const searchWrapEl = document.getElementById('search-wrap');
+const searchFrame = document.getElementById('search-frame');
+const searchEl = document.getElementById('search');
+
+const dashStatsEl = document.getElementById('dash-stats');
+const famGridEl = document.getElementById('fam-grid');
+const recentsSectionEl = document.getElementById('recents-section');
+const recentsRowEl = document.getElementById('recents-row');
+const favoritesSectionEl = document.getElementById('favorites-section');
+const favoritesRowEl = document.getElementById('favorites-row');
+const dashGuidesEl = document.getElementById('dash-guides');
+
+const resultsBackBtn = document.getElementById('results-back');
+const chipsEl = document.getElementById('chips');
+const listEl = document.getElementById('list');
+const emptyEl = document.getElementById('empty');
+const guidesEl = document.getElementById('guides');
+
+const detailBackBtn = document.getElementById('detail-back');
+const detailWrapEl = document.getElementById('detail-wrap');
+
+/* ---------- State ---------- */
+let activeFam = "Tout";
+let currentView = "dashboard";
+let detailReturnView = "dashboard";
+
+/* ---------- Favoris / récents (localStorage) ---------- */
+function itemId(d) { return d.fam + '::' + d.ref; }
+function findById(id) { return ALL_DATA.find(d => itemId(d) === id); }
+
+function getRecents() {
+  try { return JSON.parse(localStorage.getItem('kgu_recent') || '[]'); } catch { return []; }
+}
+function addRecent(id) {
+  let arr = getRecents().filter(x => x !== id);
+  arr.unshift(id);
+  localStorage.setItem('kgu_recent', JSON.stringify(arr.slice(0, 5)));
+}
+
+function getFavorites() {
+  try { return JSON.parse(localStorage.getItem('kgu_favorites') || '[]'); } catch { return []; }
+}
+function toggleFavorite(id) {
+  let arr = getFavorites();
+  if (arr.includes(id)) arr = arr.filter(x => x !== id);
+  else arr.unshift(id);
+  localStorage.setItem('kgu_favorites', JSON.stringify(arr));
+  return arr.includes(id);
+}
+function isFavorite(id) { return getFavorites().includes(id); }
+
+/* ---------- Rendering: résultats (recherche/filtre) ---------- */
+function updateChipsActive() {
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.fam === activeFam));
+}
+
+function renderGuides() {
+  guidesEl.innerHTML = '';
+  const q = searchEl.value.trim().toLowerCase();
+  if (q.length < 2) { guidesEl.style.display = 'none'; return; }
+  const matches = GUIDES.filter(g => (g.titre + " " + g.texte).toLowerCase().includes(q));
+  guidesEl.style.display = matches.length ? 'block' : 'none';
+  matches.forEach(g => {
+    const div = document.createElement('div');
+    div.className = 'guide-card';
+    div.innerHTML = `<div class="guide-title">${g.titre}</div><div class="guide-text">${g.texte}</div>`;
+    guidesEl.appendChild(div);
+  });
+}
+
+function toolHint(d) {
+  const fields = [['Pince', d.pince], ['Tourelle', d.tourelle], ['Positionneur', d.positionneur], ['Insertion', d.insertion]];
+  const found = fields.find(([, val]) => val && val !== '—');
+  if (found) return `${found[0]} · ${found[1]}`;
+  return (d.notes && d.notes !== '—') ? d.notes : '';
+}
+
+function render() {
+  renderGuides();
+  const q = searchEl.value.trim().toLowerCase();
+  listEl.innerHTML = '';
+
+  const results = ALL_DATA.filter(d => {
+    const famOk = activeFam === "Tout" || d.fam === activeFam;
+    const text = Object.values(d).join(" ").toLowerCase();
+    return famOk && text.includes(q);
+  });
+
+  emptyEl.style.display = results.length ? 'none' : 'block';
+  listEl.style.display = results.length ? 'flex' : 'none';
+
+  results.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.id = itemId(d);
+    card.innerHTML = `
+      <div class="card-head">
+        <span class="card-ref">${d.ref}</span>
+        <span class="card-fam">${d.fam}</span>
+      </div>
+      <div class="card-sub">${d.type}${d.taille && d.taille !== '—' ? ' · ' + d.taille : ''}</div>
+      <div class="card-hint">${toolHint(d)}</div>
+      <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    `;
+    listEl.appendChild(card);
+  });
+}
+
+listEl.addEventListener('click', e => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+  const d = findById(card.dataset.id);
+  if (d) showDetail(d, 'results');
+});
+
+/* ---------- Rendering: dashboard ---------- */
+function renderFamGrid() {
+  famGridEl.innerHTML = '';
+  FAMILIES.filter(f => f !== 'Tout').forEach(f => {
+    const count = ALL_DATA.filter(d => d.fam === f).length;
+    const btn = document.createElement('button');
+    btn.className = 'fam-tile';
+    btn.dataset.fam = f;
+    btn.innerHTML = `<div class="fam-tile-name">${f}</div><div class="fam-tile-count"><span class="fam-tile-num">${count}</span><span class="fam-tile-unit">réf.</span></div>`;
+    famGridEl.appendChild(btn);
+  });
+}
+
+function renderDashGuides() {
+  dashGuidesEl.innerHTML = '';
+  GUIDES.forEach(g => {
+    const div = document.createElement('div');
+    div.className = 'guide-card';
+    div.innerHTML = `<div class="guide-title">${g.titre}</div><div class="guide-text">${g.texte}</div>`;
+    dashGuidesEl.appendChild(div);
+  });
+}
+
+function renderMiniRow(containerEl, sectionEl, ids) {
+  containerEl.innerHTML = '';
+  const items = ids.map(findById).filter(Boolean);
+  sectionEl.style.display = items.length ? 'block' : 'none';
+  items.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'mini-card';
+    btn.dataset.id = itemId(d);
+    btn.innerHTML = `<div class="mini-card-fam">${d.fam}</div><div class="mini-card-ref">${d.ref}</div>`;
+    containerEl.appendChild(btn);
+  });
+}
+function renderDashRecents() { renderMiniRow(recentsRowEl, recentsSectionEl, getRecents()); }
+function renderDashFavorites() { renderMiniRow(favoritesRowEl, favoritesSectionEl, getFavorites()); }
+
+viewDashboardEl.addEventListener('click', e => {
+  const famTile = e.target.closest('.fam-tile');
+  if (famTile) {
+    resultsSearchSlot.appendChild(searchWrapEl);
+    activeFam = famTile.dataset.fam;
+    updateChipsActive();
+    searchEl.value = '';
+    setView('results');
+    render();
+    return;
+  }
+  const miniCard = e.target.closest('.mini-card');
+  if (miniCard) {
+    const d = findById(miniCard.dataset.id);
+    if (d) showDetail(d, 'dashboard');
+  }
+});
+
+/* ---------- Rendering: détail ---------- */
+function renderDetailCard(d) {
+  const id = itemId(d);
+  const fav = isFavorite(id);
+  let rows = '';
+  if (d.pince && d.pince !== '—') rows += `<tr><td>Pince</td><td>${d.pince}</td></tr>`;
+  if (d.tourelle && d.tourelle !== '—') rows += `<tr><td>Tourelle</td><td>${d.tourelle}</td></tr>`;
+  if (d.positionneur && d.positionneur !== '—') rows += `<tr><td>Positionneur</td><td>${d.positionneur}</td></tr>`;
+  if (d.insertion && d.insertion !== '—') rows += `<tr><td>Insertion</td><td>${d.insertion}</td></tr>`;
+  if (d.extraction && d.extraction !== '—') rows += `<tr><td>Extraction</td><td>${d.extraction}</td></tr>`;
+
+  detailWrapEl.innerHTML = `
+    <div class="detail-card">
+      <div class="detail-head">
+        <div>
+          <span class="card-fam">${d.fam}</span>
+          <div class="detail-ref">${d.ref}</div>
+          <div class="card-sub">${d.type}${d.taille && d.taille !== '—' ? ' · ' + d.taille : ''}</div>
+        </div>
+        <button class="fav-btn${fav ? ' active' : ''}" id="detail-fav-btn" aria-label="Favori">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </button>
+      </div>
+      <table class="card-table">${rows}</table>
+      ${d.notes && d.notes !== '—' ? `<div class="card-notes">${d.notes}</div>` : ''}
+    </div>
+  `;
+
+  document.getElementById('detail-fav-btn').addEventListener('click', () => {
+    const nowFav = toggleFavorite(id);
+    document.getElementById('detail-fav-btn').classList.toggle('active', nowFav);
+    renderDashFavorites();
+  });
+}
+
+/* ---------- Navigation entre vues ---------- */
+function setView(view) {
+  currentView = view;
+  viewDashboardEl.style.display = view === 'dashboard' ? 'block' : 'none';
+  viewResultsEl.style.display = view === 'results' ? 'block' : 'none';
+  viewDetailEl.style.display = view === 'detail' ? 'block' : 'none';
+  window.scrollTo(0, 0);
+}
+
+function showDashboardView() {
+  dashSearchSlot.appendChild(searchWrapEl);
+  searchEl.value = '';
+  activeFam = 'Tout';
+  updateChipsActive();
+  renderDashRecents();
+  renderDashFavorites();
+  setView('dashboard');
+}
+
+function showDetail(d, returnView) {
+  detailReturnView = returnView;
+  addRecent(itemId(d));
+  renderDetailCard(d);
+  setView('detail');
+}
+
+brandHomeBtn.addEventListener('click', showDashboardView);
+resultsBackBtn.addEventListener('click', showDashboardView);
+detailBackBtn.addEventListener('click', () => {
+  if (detailReturnView === 'results') { setView('results'); }
+  else { showDashboardView(); }
+});
+
+/* ---------- Recherche ---------- */
+searchFrame.addEventListener('focusin', () => searchFrame.classList.add('focused'));
+searchFrame.addEventListener('focusout', () => searchFrame.classList.remove('focused'));
+
+searchEl.addEventListener('input', () => {
+  if (currentView === 'dashboard') {
+    resultsSearchSlot.appendChild(searchWrapEl);
+    activeFam = 'Tout';
+    updateChipsActive();
+    setView('results');
+    searchEl.focus();
+  }
+  render();
+});
+
+/* ---------- Chips (familles, vue résultats) ---------- */
+FAMILIES.forEach(f => {
+  const chip = document.createElement('button');
+  chip.className = 'chip' + (f === activeFam ? ' active' : '');
+  chip.textContent = f;
+  chip.dataset.fam = f;
+  chip.addEventListener('click', () => {
+    activeFam = f;
+    updateChipsActive();
+    render();
+  });
+  chipsEl.appendChild(chip);
+});
+
+/* ---------- Init contenu statique dashboard ---------- */
+renderFamGrid();
+renderDashGuides();
+dashStatsEl.textContent = `${FAMILIES.length - 1} FAMILLES · ${ALL_DATA.length} RÉFÉRENCES`;
+render();
+
+/* ---------- PIN gate ---------- */
 function unlockApp() {
   gate.style.display = 'none';
   appEl.style.display = 'block';
-}
-
-if (localStorage.getItem('kgu_unlocked') === 'yes') {
-  unlockApp();
+  showDashboardView();
 }
 
 async function tryUnlock() {
@@ -210,17 +566,19 @@ pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); 
 
 function logout() {
   localStorage.removeItem('kgu_unlocked');
-  searchEl.value = '';
-  activeFam = 'Tout';
-  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.fam === activeFam));
-  render();
   pinInput.value = '';
   pinError.textContent = '';
   appEl.style.display = 'none';
   gate.style.display = 'flex';
+  showDashboardView();
 }
-document.getElementById('logout-btn').addEventListener('click', logout);
+logoutBtn.addEventListener('click', logout);
 
+if (localStorage.getItem('kgu_unlocked') === 'yes') {
+  unlockApp();
+}
+
+/* ---------- Statut réseau ---------- */
 function updateNetBadge() {
   const badge = document.getElementById('net-badge');
   const online = navigator.onLine;
@@ -229,84 +587,6 @@ function updateNetBadge() {
 window.addEventListener('online', updateNetBadge);
 window.addEventListener('offline', updateNetBadge);
 updateNetBadge();
-
-const searchFrame = document.getElementById('search-frame');
-const searchEl = document.getElementById('search');
-searchEl.addEventListener('focus', () => searchFrame.classList.add('focused'));
-searchEl.addEventListener('blur', () => searchFrame.classList.remove('focused'));
-
-let activeFam = "Tout";
-
-const chipsEl = document.getElementById('chips');
-const listEl = document.getElementById('list');
-const emptyEl = document.getElementById('empty');
-const guidesEl = document.getElementById('guides');
-
-FAMILIES.forEach(f => {
-  const chip = document.createElement('button');
-  chip.className = 'chip' + (f === activeFam ? ' active' : '');
-  chip.textContent = f;
-  chip.dataset.fam = f;
-  chip.addEventListener('click', () => {
-    activeFam = f;
-    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.fam === activeFam));
-    render();
-  });
-  chipsEl.appendChild(chip);
-});
-
-function renderGuides() {
-  guidesEl.innerHTML = '';
-  const q = searchEl.value.trim().toLowerCase();
-  if (q.length < 2) { guidesEl.style.display = 'none'; return; }
-  const matches = GUIDES.filter(g => (g.titre + " " + g.texte).toLowerCase().includes(q));
-  guidesEl.style.display = matches.length ? 'block' : 'none';
-  matches.forEach(g => {
-    const div = document.createElement('div');
-    div.className = 'guide-card';
-    div.innerHTML = `<div class="guide-title">${g.titre}</div><div class="guide-text">${g.texte}</div>`;
-    guidesEl.appendChild(div);
-  });
-}
-
-function render() {
-  renderGuides();
-  const q = searchEl.value.trim().toLowerCase();
-  listEl.innerHTML = '';
-
-  const results = ALL_DATA.filter(d => {
-    const famOk = activeFam === "Tout" || d.fam === activeFam;
-    const text = Object.values(d).join(" ").toLowerCase();
-    return famOk && text.includes(q);
-  });
-
-  emptyEl.style.display = results.length ? 'none' : 'block';
-  listEl.style.display = results.length ? 'flex' : 'none';
-
-  results.forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    let rows = '';
-    if (d.pince && d.pince !== '—') rows += `<tr><td>Pince</td><td>${d.pince}</td></tr>`;
-    if (d.tourelle && d.tourelle !== '—') rows += `<tr><td>Tourelle</td><td>${d.tourelle}</td></tr>`;
-    if (d.positionneur && d.positionneur !== '—') rows += `<tr><td>Positionneur</td><td>${d.positionneur}</td></tr>`;
-    if (d.insertion && d.insertion !== '—') rows += `<tr><td>Insertion</td><td>${d.insertion}</td></tr>`;
-    if (d.extraction && d.extraction !== '—') rows += `<tr><td>Extraction</td><td>${d.extraction}</td></tr>`;
-    card.innerHTML = `
-      <div class="card-head">
-        <span class="card-ref">${d.ref}</span>
-        <span class="card-fam">${d.fam}</span>
-      </div>
-      <div class="card-sub">${d.type}${d.taille && d.taille !== '—' ? ' · ' + d.taille : ''}</div>
-      <table class="card-table">${rows}</table>
-      ${d.notes && d.notes !== '—' ? `<div class="card-notes">${d.notes}</div>` : ''}
-    `;
-    listEl.appendChild(card);
-  });
-}
-
-searchEl.addEventListener('input', render);
-render();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
