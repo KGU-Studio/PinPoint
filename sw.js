@@ -1,5 +1,6 @@
-// Service worker — cache-first pour usage 100% hors ligne après la 1re visite.
-const CACHE_NAME = "pinpoint-v1";
+// Service worker — réseau en priorité (toujours la dernière version en ligne),
+// repli sur le cache si hors ligne.
+const CACHE_NAME = "pinpoint-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -27,15 +28,12 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => cached);
-    })
+    fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
