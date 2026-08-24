@@ -73,9 +73,14 @@
   .brand-mark svg { width: 16px; height: 16px; }
   .brand-name { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
 
+  .header-right { display: flex; align-items: center; gap: 12px; }
   .status-led { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-secondary); }
   .led-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
   .led-dot.off { background: var(--text-muted); box-shadow: none; }
+
+  .logout-btn { width: 28px; height: 28px; flex-shrink: 0; border-radius: 7px; background: var(--bg-panel-2); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); padding: 0; }
+  .logout-btn svg { width: 15px; height: 15px; }
+  .logout-btn:active { background: var(--amber-bg); border-color: var(--amber-dim); color: var(--amber); }
 
   .search-wrap { padding: 16px 16px 10px; position: relative; }
   .search-frame { position: relative; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--bg-panel); transition: border-color 0.15s, box-shadow 0.15s; }
@@ -137,7 +142,12 @@
       </div>
       <span class="brand-name">PinPoint</span>
     </div>
-    <div class="status-led" id="net-badge"><span class="led-dot"></span>Hors ligne</div>
+    <div class="header-right">
+      <div class="status-led" id="net-badge"><span class="led-dot"></span>Hors ligne</div>
+      <button class="logout-btn" id="logout-btn" title="Déconnexion" aria-label="Déconnexion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
   </header>
 
   <div class="search-wrap">
@@ -197,6 +207,19 @@ async function tryUnlock() {
 
 pinSubmit.addEventListener('click', tryUnlock);
 pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+function logout() {
+  localStorage.removeItem('kgu_unlocked');
+  searchEl.value = '';
+  activeFam = 'Tout';
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.fam === activeFam));
+  render();
+  pinInput.value = '';
+  pinError.textContent = '';
+  appEl.style.display = 'none';
+  gate.style.display = 'flex';
+}
+document.getElementById('logout-btn').addEventListener('click', logout);
 
 function updateNetBadge() {
   const badge = document.getElementById('net-badge');
