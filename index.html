@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B1220">
+<title>PinPoint — KGU Studio</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  :root {
+    --bg-deep: #0B1220;
+    --bg-panel: #131B2E;
+    --bg-panel-2: #1B2540;
+    --line: #2A3654;
+    --line-strong: #3A4870;
+    --text-primary: #E8ECF4;
+    --text-secondary: #8A94AD;
+    --text-muted: #5C6685;
+    --amber: #E8A33D;
+    --amber-dim: #B87F28;
+    --amber-bg: rgba(232, 163, 61, 0.10);
+    --green: #4ADE80;
+    --red: #F0665C;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; height: 100%;
+    font-family: var(--font-sans);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+  }
+  body {
+    background-image:
+      linear-gradient(rgba(232,236,244,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,236,244,0.025) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  #gate {
+    position: fixed; inset: 0; background: var(--bg-deep);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px; z-index: 100;
+  }
+  .gate-mark { width: 76px; height: 76px; margin-bottom: 20px; }
+  .gate-mark img { width: 100%; height: 100%; border-radius: 18px; display: block; }
+  #gate .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; color: var(--amber); margin-bottom: 6px; text-transform: uppercase; }
+  #gate h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; color: var(--text-primary); margin: 0 0 6px; }
+  #gate p { color: var(--text-secondary); font-size: 13px; margin: 0 0 28px; text-align: center; line-height: 1.5; }
+  #pin-input {
+    width: 220px; padding: 16px; font-family: var(--font-mono); font-size: 26px; letter-spacing: 12px;
+    text-align: center; border-radius: 10px; border: 1px solid var(--line-strong);
+    background: var(--bg-panel); color: var(--text-primary); margin-bottom: 14px;
+  }
+  #pin-input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-bg); }
+  #pin-error { color: var(--red); font-size: 12px; height: 16px; margin-bottom: 8px; font-family: var(--font-mono); }
+  #pin-submit {
+    padding: 13px 36px; background: var(--amber); color: #1A1200; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  #pin-submit:active { background: var(--amber-dim); }
+
+  #app { display: none; max-width: 480px; margin: 0 auto; min-height: 100%; background: transparent; }
+
+  header {
+    background: var(--bg-panel); border-bottom: 1px solid var(--line); padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-mark { width: 28px; height: 28px; border-radius: 7px; background: var(--bg-panel-2); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; }
+  .brand-mark svg { width: 16px; height: 16px; }
+  .brand-name { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+
+  .status-led { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-secondary); }
+  .led-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .led-dot.off { background: var(--text-muted); box-shadow: none; }
+
+  .search-wrap { padding: 16px 16px 10px; position: relative; }
+  .search-frame { position: relative; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--bg-panel); transition: border-color 0.15s, box-shadow 0.15s; }
+  .search-frame.focused { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-bg); }
+  .search-frame::before, .search-frame::after { content: ""; position: absolute; width: 10px; height: 10px; border-color: var(--amber); opacity: 0; transition: opacity 0.15s; pointer-events: none; }
+  .search-frame::before { top: -4px; left: -4px; border-top: 2px solid; border-left: 2px solid; }
+  .search-frame::after { bottom: -4px; right: -4px; border-bottom: 2px solid; border-right: 2px solid; }
+  .search-frame.focused::before, .search-frame.focused::after { opacity: 1; }
+  .search-wrap input { width: 100%; padding: 12px 14px 12px 40px; background: transparent; border: none; font-family: var(--font-mono); font-size: 14px; color: var(--text-primary); }
+  .search-wrap input::placeholder { color: var(--text-muted); }
+  .search-wrap input:focus { outline: none; }
+  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); pointer-events: none; }
+
+  .chips { display: flex; gap: 6px; padding: 4px 16px 14px; overflow-x: auto; }
+  .chip { flex-shrink: 0; padding: 6px 13px; font-size: 11px; font-weight: 600; font-family: var(--font-mono); letter-spacing: 0.3px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg-panel); color: var(--text-secondary); white-space: nowrap; text-transform: uppercase; }
+  .chip.active { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-dim); }
+
+  .list { padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+  .card { background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; position: relative; }
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 3px; }
+  .card-ref { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+  .card-fam { flex-shrink: 0; font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; background: var(--bg-panel-2); color: var(--amber); padding: 3px 8px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--line-strong); }
+  .card-sub { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 10px; }
+  .card-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+  .card-table td { padding: 4px 0; border-top: 1px solid var(--line); }
+  .card-table tr:first-child td { border-top: none; }
+  .card-table td:first-child { color: var(--text-muted); width: 108px; vertical-align: top; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.3px; padding-top: 6px; }
+  .card-table td:last-child { text-align: right; font-family: var(--font-mono); color: var(--text-primary); font-weight: 500; padding-top: 5px; }
+  .card-notes { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+
+  .empty { display: none; padding: 56px 16px; text-align: center; color: var(--text-muted); font-size: 12.5px; font-family: var(--font-mono); }
+
+  .guides { padding: 0 16px 6px; }
+  .guide-card { background: var(--amber-bg); border-left: 2px solid var(--amber); border-radius: 0 8px 8px 0; padding: 11px 13px; margin-bottom: 8px; }
+  .guide-title { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--amber); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .guide-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.55; }
+
+  footer { padding: 18px 16px; text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; border-top: 1px solid var(--line); margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-mark"><img src="icons/icon-192.png" alt=""></div>
+  <div class="eyebrow">KGU Studio</div>
+  <h1>PinPoint</h1>
+  <p>Accès réservé — atelier câblage<br>Code technicien requis</p>
+  <input id="pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="••••" autocomplete="off">
+  <div id="pin-error"></div>
+  <button id="pin-submit">Déverrouiller</button>
+</div>
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#E8A33D" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.6" fill="#E8A33D"/><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/></svg>
+      </div>
+      <span class="brand-name">PinPoint</span>
+    </div>
+    <div class="status-led" id="net-badge"><span class="led-dot"></span>Hors ligne</div>
+  </header>
+
+  <div class="search-wrap">
+    <div class="search-frame" id="search-frame">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search" type="text" placeholder="Réf, taille, marque, section...">
+    </div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="guides" id="guides"></div>
+
+  <div class="list" id="list"></div>
+  <div class="empty" id="empty">— AUCUN RÉSULTAT —<br>Vérifie l'orthographe ou change de filtre</div>
+
+  <footer>PinPoint · KGU Studio · Usage interne · v1.0</footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const PIN_HASH = "35a6c93873ac10cb4386cd7e3b071daa8b3002025a30284d26b3d5a0950f7900"; // PIN par défaut : 8999 — À CHANGER
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+const gate = document.getElementById('gate');
+const appEl = document.getElementById('app');
+const pinInput = document.getElementById('pin-input');
+const pinError = document.getElementById('pin-error');
+const pinSubmit = document.getElementById('pin-submit');
+
+function unlockApp() {
+  gate.style.display = 'none';
+  appEl.style.display = 'block';
+}
+
+if (localStorage.getItem('kgu_unlocked') === 'yes') {
+  unlockApp();
+}
+
+async function tryUnlock() {
+  const val = pinInput.value.trim();
+  if (!val) { pinError.textContent = "ENTRE UN CODE"; return; }
+  const hash = await sha256(val);
+  if (hash === PIN_HASH) {
+    localStorage.setItem('kgu_unlocked', 'yes');
+    pinError.textContent = "";
+    unlockApp();
+  } else {
+    pinError.textContent = "CODE INCORRECT";
+    pinInput.value = "";
+  }
+}
+
+pinSubmit.addEventListener('click', tryUnlock);
+pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+function updateNetBadge() {
+  const badge = document.getElementById('net-badge');
+  const online = navigator.onLine;
+  badge.innerHTML = `<span class="led-dot${online ? '' : ' off'}"></span>${online ? 'En ligne' : 'Hors ligne'}`;
+}
+window.addEventListener('online', updateNetBadge);
+window.addEventListener('offline', updateNetBadge);
+updateNetBadge();
+
+const searchFrame = document.getElementById('search-frame');
+const searchEl = document.getElementById('search');
+searchEl.addEventListener('focus', () => searchFrame.classList.add('focused'));
+searchEl.addEventListener('blur', () => searchFrame.classList.remove('focused'));
+
+let activeFam = "Tout";
+
+const chipsEl = document.getElementById('chips');
+const listEl = document.getElementById('list');
+const emptyEl = document.getElementById('empty');
+const guidesEl = document.getElementById('guides');
+
+FAMILIES.forEach(f => {
+  const chip = document.createElement('button');
+  chip.className = 'chip' + (f === activeFam ? ' active' : '');
+  chip.textContent = f;
+  chip.dataset.fam = f;
+  chip.addEventListener('click', () => {
+    activeFam = f;
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.fam === activeFam));
+    render();
+  });
+  chipsEl.appendChild(chip);
+});
+
+function renderGuides() {
+  guidesEl.innerHTML = '';
+  const q = searchEl.value.trim().toLowerCase();
+  if (q.length < 2) { guidesEl.style.display = 'none'; return; }
+  const matches = GUIDES.filter(g => (g.titre + " " + g.texte).toLowerCase().includes(q));
+  guidesEl.style.display = matches.length ? 'block' : 'none';
+  matches.forEach(g => {
+    const div = document.createElement('div');
+    div.className = 'guide-card';
+    div.innerHTML = `<div class="guide-title">${g.titre}</div><div class="guide-text">${g.texte}</div>`;
+    guidesEl.appendChild(div);
+  });
+}
+
+function render() {
+  renderGuides();
+  const q = searchEl.value.trim().toLowerCase();
+  listEl.innerHTML = '';
+
+  const results = ALL_DATA.filter(d => {
+    const famOk = activeFam === "Tout" || d.fam === activeFam;
+    const text = Object.values(d).join(" ").toLowerCase();
+    return famOk && text.includes(q);
+  });
+
+  emptyEl.style.display = results.length ? 'none' : 'block';
+  listEl.style.display = results.length ? 'flex' : 'none';
+
+  results.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    let rows = '';
+    if (d.pince && d.pince !== '—') rows += `<tr><td>Pince</td><td>${d.pince}</td></tr>`;
+    if (d.tourelle && d.tourelle !== '—') rows += `<tr><td>Tourelle</td><td>${d.tourelle}</td></tr>`;
+    if (d.positionneur && d.positionneur !== '—') rows += `<tr><td>Positionneur</td><td>${d.positionneur}</td></tr>`;
+    if (d.insertion && d.insertion !== '—') rows += `<tr><td>Insertion</td><td>${d.insertion}</td></tr>`;
+    if (d.extraction && d.extraction !== '—') rows += `<tr><td>Extraction</td><td>${d.extraction}</td></tr>`;
+    card.innerHTML = `
+      <div class="card-head">
+        <span class="card-ref">${d.ref}</span>
+        <span class="card-fam">${d.fam}</span>
+      </div>
+      <div class="card-sub">${d.type}${d.taille && d.taille !== '—' ? ' · ' + d.taille : ''}</div>
+      <table class="card-table">${rows}</table>
+      ${d.notes && d.notes !== '—' ? `<div class="card-notes">${d.notes}</div>` : ''}
+    `;
+    listEl.appendChild(card);
+  });
+}
+
+searchEl.addEventListener('input', render);
+render();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
